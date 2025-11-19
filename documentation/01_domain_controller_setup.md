@@ -24,12 +24,12 @@ OS: Windows Server 2019 (GUI)
 RAM: 2.5 GB  
 CPU Cores: 2  
 Disk Size: 60 GB  
-Network Adapter: Internal Network (intnet)  
+Network Adapter: Internal Network (lab-network)  
 Guest Additions Installed: Yes  
 
 > 📎 Note: The VM was originally configured using NAT for initial setup and internet access.  
 > After installing Active Directory and DNS, the network adapter was switched to  
-> **Internal Network (intnet)** to allow private communication with the domain client.
+> **Internal Network (lab-network)** to allow private communication with the domain client.
 
 ---
 
