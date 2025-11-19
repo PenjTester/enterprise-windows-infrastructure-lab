@@ -2,7 +2,7 @@
 
 **Date:** 11/18/2025  
 **Machine:** VirtualBox — Windows Server 2019 (GUI)  
-**Host PC:** Ryzen 9 9900X, 32GB RAM, RTX 5070  
+**Host PC:** Ryzen 9 9900X, 32GB RAM, 2TB NVMe SSD  
 
 ---
 
@@ -21,7 +21,7 @@ Set up the **core identity infrastructure** of a virtual enterprise network:
 ##  Virtual Machine Configuration (VirtualBox)
 
 OS: Windows Server 2019 (GUI)  
-RAM: 7 GB  
+RAM: 2.5 GB  
 CPU Cores: 2  
 Disk Size: 60 GB  
 Network Adapter: NAT  
