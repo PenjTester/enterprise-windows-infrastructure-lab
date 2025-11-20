@@ -9,7 +9,7 @@
 ##  Goal of This Milestone
 Successfully configure a Windows 10 client to:
 
-- Use correct internal (lab-network) networking
+- Use correct internal networking (lab-network)
 - Use DNS from the Domain Controller (LAB-DC01)
 - Resolve the domain name (lab.local) via DNS
 - Join Active Directory using LAB\Administrator
