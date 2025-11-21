@@ -90,7 +90,6 @@ Protection was temporarily disabled to allow nesting and re-enabled after struct
 
 ---
 
----
 
 ## 4️. Domain User Account Creation
 
@@ -127,15 +126,87 @@ With the OU structure established, four domain user accounts were created in the
 
 ---
 
-##  Checkpoint Summary
+## 5. Domain Logon Testing (LAB-CLIENT01)
 
-| Component | Status |
-|-----------|--------|
-| OU structure created and nested | ✔️ |
-| Object protection enabled after nesting | ✔️ |
-| User accounts added to correct OUs | ✔️ |
-| Ready for login testing from LAB-CLIENT01 |  Next |
+To verify that newly created Active Directory users can authenticate against the domain, I logged into **LAB-CLIENT01** using a standard domain user account.
+
+**Actions Performed:**
+1. Booted LAB-CLIENT01 and selected **Other User** at the login screen.
+2. Entered domain credentials for:  
+   ```
+   jmiller
+   ```
+3. Received expected message: *“The user’s password must be changed before signing in.”*  
+   (This confirms the AD account policy is active and functioning.)
+4. Successfully changed the password and logged into Windows using domain credentials.
+
+ *Screenshot — showing login page for jmiller within the LAB domain*
+
+<img width="1616" height="1128" alt="Screenshot 2025-11-21 144810" src="https://github.com/user-attachments/assets/5566c9cd-c8fd-4977-84dc-d131f01e4aab" />
+
 
 ---
+
+## 6. Identity Confirmation (Client-Side Verification)
+
+Once logged into LAB-CLIENT01 as **jmiller**, I confirmed domain-aware authentication using command-line identity checks.
+
+**Commands executed from Command Prompt:**
+
+```
+whoami
+echo %userdomain%
+echo %username%
+nslookup lab.local
+systeminfo | findstr /B /C:"Domain"
+```
+
+**Verified Results:**
+- `whoami` returned **lab\jmiller** confirming domain identity.
+- `%userdomain%` showed **LAB**
+- `%username%` showed **jmiller**
+- `nslookup lab.local` successfully resolved via the domain controller (10.0.2.10)
+- `systeminfo` confirmed the device is joined to **lab.local**
+
+---
+
+
+ *Screenshot — LAB-CLIENT01 Command Prompt showing identity validation using whoami and echo commands*  
+
+<img width="444" height="148" alt="Screenshot 2025-11-21 150341" src="https://github.com/user-attachments/assets/2202ece9-e09a-42f4-9d4b-7ecca02aeaad" />
+
+Confirms domain login as `lab\jmiller` and verifies user/domain context through `%userdomain%` and `%username%`.
+
+
+---
+
+ *Screenshot — LAB-CLIENT01 verifying domain membership using `systeminfo /findstr /B /C:"Domain"`* 
+
+<img width="483" height="54" alt="Screenshot 2025-11-21 150801" src="https://github.com/user-attachments/assets/6ab49276-6010-4d61-963a-a0c6d8f069c7" />
+
+Shows confirmation that the machine is joined to **lab.local** domain.
+
+
+---
+
+>  *The first-time password change prompt and “Preparing Windows” profile screens were completed successfully but not captured. Future user logins can include screenshots if needed for documentation completeness.*
+
+---
+
+### Status: ✔ Domain authentication successfully validated
+
+| Verification Check | Result |
+|--------------------|--------|
+| User logs in with LAB domain credentials | ✔ |
+| Password change policy enforced at first login | ✔ |
+| DNS resolves domain correctly | ✔ |
+| systeminfo confirms domain join | ✔ |
+| Identity commands confirm AD-based login | ✔ |
+
+---
+
+**Next Step →**
+Proceed to **Group Management and Access Control**  
+We will create security groups in AD, assign users to their role-based OUs, and validate centralized management.
 
 
