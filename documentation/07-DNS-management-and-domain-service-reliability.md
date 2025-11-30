@@ -1,9 +1,9 @@
 # 07 – DNS Management & Domain Service Reliability
 
-Date Started: 11/30/2025 
 
-Server: LAB-DC01 (Windows Server 2019)       
-Client: LAB-CLIENT01 (Windows 10 Pro)
+Date Started: 11/30/2025   
+Server: LAB-DC01 (Windows Server 2019)   
+Client: LAB-CLIENT01 (Windows 10 Pro)  
 
 ---
 
