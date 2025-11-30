@@ -1,7 +1,7 @@
 # Enterprise IT Lab (VirtualBox)
 
 This repository contains a small virtual enterprise environment built in Oracle VirtualBox.  
-The goal is to set up a realistic Windows domain with a domain controller, DNS, DHCP, Active Directory structure, and a Windows 10 client. Each milestone focuses on a common administrative task, with step-by-step documentation and screenshots stored in the `documentation/` folder.
+The goal is to set up a realistic Windows domain with a domain controller, DNS, DHCP, Active Directory structure, and a Windows 10 client. Each milestone focuses on a common administrative task, with step-by-step documentation and screenshots stored in the `documentation` folder.
 
 This project is meant to be practical: build the environment, configure the services, and verify that everything works. The documentation reflects what was done, why it was done, and how it behaves.
 
