@@ -191,7 +191,7 @@ This milestone confirms that the foundational name services for the entire domai
 
 ---
 
-#  WHAT'S NEXT?
+#  NEXT
 
 ## Milestone 08 – Group Policy Management & Enterprise Configuration
 
