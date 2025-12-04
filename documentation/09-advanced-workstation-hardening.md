@@ -66,7 +66,7 @@ In **ADUC** on LAB-DC01:
 - Confirm that **LAB-CLIENT01** resides in the **Lab Workstations** OU.
 
 
-*Screenshot 1 – Group Policy Management showing lab.local → _Computers → _Workstations → Lab Workstations with LAB-CLIENT01 inside*  
+*Screenshot – Group Policy Management showing lab.local → _Computers → _Workstations → Lab Workstations with LAB-CLIENT01 inside*  
 <img width="1187" height="498" alt="Screenshot 2025-12-03 163743" src="https://github.com/user-attachments/assets/ff752637-8a0d-4cc8-b892-c42bcec2f024" />
 
 ---
@@ -91,7 +91,7 @@ In **Group Policy Management** on **LAB-DC01**:
    - Baseline Workstation Policy remains linked (should appear above or alongside the new GPO).
 
 
-*Screenshot 2 — Lab Workstations OU showing both **Baseline Workstation Policy** and **Advanced Workstation Hardening** linked,  
+*Screenshot — Lab Workstations OU showing both **Baseline Workstation Policy** and **Advanced Workstation Hardening** linked,  
 with **Link Enabled = Yes** and **GPO Status = Enabled***  
 <img width="1186" height="437" alt="Screenshot 2025-12-03 130351" src="https://github.com/user-attachments/assets/7ddc5e8a-1a96-423d-9e4b-1853b3b2056f" />
 
@@ -146,7 +146,7 @@ In the **Advanced Workstation Hardening** GPO editor:
   - Set to **Send NTLMv2 response only. Refuse LM & NTLM**  
   - Effect: Legacy LM and NTLMv1 are refused; only NTLMv2 is allowed.
 
-*Screenshot 4 – Security Options view showing SMB signing and LAN Manager authentication level configured*  
+*Screenshot – Security Options view showing SMB signing and LAN Manager authentication level configured*  
 <img width="416" height="504" alt="Screenshot 2025-12-03 131343" src="https://github.com/user-attachments/assets/3d1359e8-c5ff-4189-a503-1212fa8f169f" />
 
 ---
@@ -166,8 +166,8 @@ In the same **Security Options** view:
 
 This ensures both client and server components enforce strong session security for NTLM traffic.
 
-**Screenshot 5 – Security Options properties for “Minimum session security for NTLM SSP (clients)” showing NTLMv2 + 128-bit encryption required**  
-`![PLACEHOLDER](path-to-screenshot)`
+*Screenshot – Security Options properties for “Minimum session security for NTLM SSP (clients)” showing NTLMv2 + 128-bit encryption required*  
+<img width="414" height="499" alt="Screenshot 2025-12-03 161758" src="https://github.com/user-attachments/assets/002aac0f-8764-4c26-a18b-1df922062c3c" />
 
 ---
 
@@ -188,8 +188,8 @@ Configure:
     - **LOCAL ACCOUNT AND MEMBER OF ADMINISTRATORS GROUP**  
   - Effect: Local accounts (including the local Administrator) cannot be used over the network.
 
-**Screenshot 6 – User Rights Assignment for “Deny access to this computer from the network” showing LOCAL ACCOUNT and LOCAL ACCOUNT AND MEMBER OF ADMINISTRATORS GROUP**  
-`![PLACEHOLDER](path-to-screenshot)`
+*Screenshot – User Rights Assignment for “Deny access to this computer from the network” showing **Local Account** and **Local Account and Member of Administrators Group***  
+<img width="414" height="505" alt="Screenshot 2025-12-03 134556" src="https://github.com/user-attachments/assets/1ec28b64-b378-4cfd-9ad7-cb0ba09ab542" />
 
 ---
 
@@ -221,8 +221,8 @@ Configure:
 
 These settings reduce the risk of credentials being silently reused across systems.
 
-**Screenshot 7 – “Deny delegating default credentials” and “Deny delegating saved credentials” configured with a wildcard entry**  
-`![PLACEHOLDER](path-to-screenshot)`
+*Screenshot – “Deny delegating default credentials” and “Deny delegating saved credentials” configured with a wildcard entry*  
+<img width="817" height="598" alt="Screenshot 2025-12-03 140636" src="https://github.com/user-attachments/assets/b430666f-87ae-406f-acd6-b02aba508115" />
 
 ---
 
@@ -238,8 +238,8 @@ Configure:
   - Set to **Enabled**  
   - Effect: Prevents sending error data to Microsoft, reducing information leakage.
 
-**Screenshot 8 – “Disable Windows Error Reporting” policy enabled**  
-`![PLACEHOLDER](path-to-screenshot)`
+*Screenshot – “Disable Windows Error Reporting” policy enabled*  
+<img width="686" height="632" alt="image" src="https://github.com/user-attachments/assets/3193ce10-07c2-4163-953c-749194857a65" />
 
 ---
 
@@ -260,13 +260,16 @@ Configure:
   - Click **Show…** and add appropriate module patterns (e.g. `Microsoft.PowerShell.*`).  
   - Effect: Logs PowerShell module usage for specified modules.
 
+- **Turn on Powershell Transcription**
+  -Set to **Enabled**
+
 These settings cause detailed PowerShell activity to be written into the **PowerShell Operational** event log.
 
-**Screenshot 9 – Windows PowerShell policy node showing Script Block Logging and Module Logging enabled**  
-`![PLACEHOLDER](path-to-screenshot)`
+*Screenshot – Windows PowerShell policy node showing Script Block Logging, and Module Logging, and Powershell Transcription enabled*  
+<img width="936" height="587" alt="Screenshot 2025-12-03 135757" src="https://github.com/user-attachments/assets/88f7e789-30b9-4206-abd4-edcb48a4371c" />
 
-**Screenshot 10 – Module Logging “Show Contents” dialog with a wildcard entry (e.g., Microsoft.PowerShell.*)**  
-`![PLACEHOLDER](path-to-screenshot)`
+*Screenshot – Module Logging “Show Contents” dialog with a wildcard entry (e.g., Microsoft.PowerShell.*)*  
+<img width="492" height="328" alt="image" src="https://github.com/user-attachments/assets/befa574c-eb6b-4227-988d-a8c9542ce01f" />
 
 ---
 
