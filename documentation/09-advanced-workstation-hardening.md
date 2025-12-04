@@ -48,50 +48,53 @@ This milestone focuses on:
 
 ---
 
+
 ## Phase 1 – Create and Link the “Advanced Workstation Hardening” GPO
+
 
 The first step is to create a dedicated GPO for advanced hardening and link it only where it’s intended: the **Lab Workstations** OU.
 
-### 1.1 – Open Group Policy Management and confirm OU structure
+## 1.1 – Open Active Directory Users and Computers and confirm OU structure
 
-In **Group Policy Management** on LAB-DC01:
+In **ADUC** on LAB-DC01:
 
-- Expand: `Forest: lab.local` → `Domains` → `lab.local`
+- Expand: `lab.local`
 - Confirm the presence of:  
   - `_Computers`  
   - `_Workstations`  
   - `Lab Workstations`  
 - Confirm that **LAB-CLIENT01** resides in the **Lab Workstations** OU.
 
-**Screenshot 1 – Group Policy Management showing lab.local → _Computers → _Workstations → Lab Workstations with LAB-CLIENT01 inside**  
-`![PLACEHOLDER](path-to-screenshot)`
+
+*Screenshot 1 – Group Policy Management showing lab.local → _Computers → _Workstations → Lab Workstations with LAB-CLIENT01 inside*  
+<img width="1187" height="498" alt="Screenshot 2025-12-03 163743" src="https://github.com/user-attachments/assets/ff752637-8a0d-4cc8-b892-c42bcec2f024" />
 
 ---
 
-### 1.2 – Create the “Advanced Workstation Hardening” GPO
+## 1.2 – Create and Confirm the “Advanced Workstation Hardening” GPO
 
-1. In **Group Policy Management**, right-click the **Lab Workstations** OU.  
-2. Select **Create a GPO in this domain, and Link it here…**  
-3. Name the GPO:  
-   **Advanced Workstation Hardening**  
-4. Leave **Source Starter GPO** as **(none)**.  
-5. Confirm that the GPO now appears under the Lab Workstations OU.
+In **Group Policy Management** on **LAB-DC01**:
 
-**Screenshot 2 – New “Advanced Workstation Hardening” GPO shown under the Lab Workstations OU**  
-`![PLACEHOLDER](path-to-screenshot)`
+1. Right-click **Lab Workstations** and select:  
+   **Create a GPO in this domain, and Link it here…**
 
----
+2. Name the GPO:  
+   **Advanced Workstation Hardening**
 
-### 1.3 – Confirm link properties
+3. Leave **Source Starter GPO** as **(none)**.
 
-1. Click on **Lab Workstations** in the left pane.  
-2. In the right pane, confirm:  
+4. After creation, ensure the GPO now appears under the **Lab Workstations** OU.
+
+5. With **Lab Workstations** selected in the left pane, confirm the link properties in the right pane:
    - **Link Enabled:** Yes  
    - **GPO Status:** Enabled  
-3. Optionally verify that **Baseline Workstation Policy** is still linked and processed before/alongside the new GPO.
+   - Baseline Workstation Policy remains linked (should appear above or alongside the new GPO).
 
-**Screenshot 3 – Lab Workstations OU with Baseline Workstation Policy and Advanced Workstation Hardening linked**  
-`![PLACEHOLDER](path-to-screenshot)`
+
+*Screenshot 2 — Lab Workstations OU showing both **Baseline Workstation Policy** and **Advanced Workstation Hardening** linked,  
+with **Link Enabled = Yes** and **GPO Status = Enabled***  
+<img width="1186" height="437" alt="Screenshot 2025-12-03 130351" src="https://github.com/user-attachments/assets/7ddc5e8a-1a96-423d-9e4b-1853b3b2056f" />
+
 
 ---
 
@@ -117,20 +120,34 @@ In the **Advanced Workstation Hardening** GPO editor:
   - Set to **Enabled**  
   - Effect: The workstation always signs SMB client traffic.
 
+<img width="415" height="503" alt="Screenshot 2025-12-03 130932" src="https://github.com/user-attachments/assets/173195de-da6b-459f-8d4a-ecdbe2251f99" />
+
+---
+
 - **Microsoft network client: Digitally sign communications (if server agrees)**  
   - Set to **Enabled** (if configured)  
   - Effect: Will sign SMB traffic when supported by the server.
+
+<img width="416" height="502" alt="image" src="https://github.com/user-attachments/assets/ff1f83e3-2ed8-4cf1-8042-d00e58c79761" />
+
+
+---
 
 - **Microsoft network server: Digitally sign communications (always)**  
   - Set to **Enabled**  
   - Effect: The workstation, acting as server, requires signed SMB connections.
 
+ <img width="412" height="503" alt="image" src="https://github.com/user-attachments/assets/2886ab05-3617-48ad-9628-03b771786e8a" />
+
+
+---
+
 - **Network security: LAN Manager authentication level**  
   - Set to **Send NTLMv2 response only. Refuse LM & NTLM**  
   - Effect: Legacy LM and NTLMv1 are refused; only NTLMv2 is allowed.
 
-**Screenshot 4 – Security Options view showing SMB signing and LAN Manager authentication level configured**  
-`![PLACEHOLDER](path-to-screenshot)`
+*Screenshot 4 – Security Options view showing SMB signing and LAN Manager authentication level configured*  
+<img width="416" height="504" alt="Screenshot 2025-12-03 131343" src="https://github.com/user-attachments/assets/3d1359e8-c5ff-4189-a503-1212fa8f169f" />
 
 ---
 
