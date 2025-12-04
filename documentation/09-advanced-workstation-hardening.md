@@ -381,6 +381,69 @@ These failures confirm inbound SMB and ICMP are now blocked, and local accounts 
 
 ---
 
+
+## Appendix A — Additional Hardening Settings Applied (Not Shown in Main Phases)
+
+The following configurations were applied during Milestone 09 but were not included in the step-by-step documentation sections. These settings further strengthen workstation security and complete the baseline hardening of domain-joined Windows 10 devices.
+
+---
+
+### **A.1 — Guest Account Restrictions**
+
+| Setting | Final Value | Purpose |
+|--------|-------------|---------|
+| **Accounts: Guest account status** | Disabled | Prevents the built-in Guest account from being used for any authentication or local login. |
+
+---
+
+### **A.2 — Admin Approval Mode for Built-in Administrator**
+
+| Setting | Final Value | Purpose |
+|--------|-------------|---------|
+| **User Account Control: Admin Approval Mode for the Built-in Administrator account** | Enabled | Forces UAC elevation prompts even when logged in as BUILTIN\Administrator, reducing privilege-misuse risk. |
+
+---
+
+### **A.3 — NTLM Network Restrictions**
+
+| Policy | Final Value | Purpose |
+|--------|-------------|---------|
+| **Restrict NTLM: Incoming NTLM traffic** | Deny all accounts | Blocks all inbound NTLM authentication attempts. Eliminates NTLM-based lateral movement. |
+| **Restrict NTLM: Outgoing NTLM traffic to remote servers** | Deny all | Prevents the workstation from authenticating to servers using NTLM. Forces Kerberos only. |
+
+---
+
+### **A.4 — LDAP Signing Requirements**
+
+| Setting | Final Value | Purpose |
+|--------|-------------|---------|
+| **Network security: LDAP client signing requirements** | Require signing | Prevents LDAP downgrade attacks and ensures integrity-protected directory queries. |
+
+---
+
+### **A.5 — Windows Defender SmartScreen**
+
+| Setting | Final Value | Purpose |
+|--------|-------------|---------|
+| **Configure Windows Defender SmartScreen** | Enabled (Warn and prevent bypass) | Provides reputation-based protection for downloaded files and scripts. |
+
+---
+
+### **A.6 — SMB & NTLM Session Security Values (Confirmed but Not Individually Screen-Captured)**
+
+These settings were applied and verified through RSOP and local policy checks:
+
+| Setting | Final Value |
+|--------|-------------|
+| **Minimum session security for NTLM SSP (clients)** | Require NTLMv2 session security + Require 128-bit encryption |
+| **Minimum session security for NTLM SSP (servers)** | Require 128-bit encryption |
+| **Microsoft network server: Digitally sign communications (always)** | Enabled |
+| **Microsoft network client: Digitally sign communications (if server agrees)** | Enabled |
+
+These enforce integrity-protected SMB traffic and eliminate LM/NTLM downgrade scenarios.
+
+---
+
 ## Summary
 
 Milestone 09 successfully hardened LAB-CLIENT01:
