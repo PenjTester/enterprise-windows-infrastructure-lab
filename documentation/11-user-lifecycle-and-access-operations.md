@@ -385,80 +385,105 @@ This demonstrates that:
 
 ---
 
-## 11.11 Re-Hardening the Workstation After Testing
+## 11.11 Verification of Restored Workstation Hardening
 
-### 11.11A Temporary Relaxation vs. Final State
+After completing Help Desk Tier 1 testing, the final step of Milestone 11 was to **re-harden LAB-CLIENT01** so that it again matches the security posture from Milestones 9 and 10.  
+Because local security policy is enforced via Group Policy, the cleanest way to verify this is from **LAB-DC01** using the **Group Policy Management Editor (GPMC)**.
 
-To perform certain tests and work around earlier constraints, some security settings were temporarily relaxed (through GPO and troubleshooting). Once the help desk functionality was confirmed, it was important to **return LAB-CLIENT01 to the hardened baseline** defined in Milestones 9 and 10.
+The goal of this section is to show that:
 
-The main workstation policies linked to the workstation OU are:
-
-- **Baseline Workstation Policy**  
-- **Advanced Workstation Hardening**  
-- **Privileged Access – Block Domain Admins On Workstations**
-
-These are linked to the **Lab Workstations** OU that contains LAB-CLIENT01.
+- Workstations in the **Lab Workstations** OU are once again protected by the hardened GPOs.
+- The key user-rights assignments that prevent privileged and local accounts from logging on to workstations are **back in place**.
 
 ---
 
-### 11.11B Restored User Rights Assignments
+### 11.11A Confirm the Workstation Hardening GPO Is Linked
 
-Using **Group Policy Management** on LAB-DC01 and **Local Security Policy / RSOP** on LAB-CLIENT01, I verified that the following were in their intended hardened state:
+On **LAB-DC01**:
 
-- **Deny log on locally** includes:
-  - Domain Admins  
-  - lab-admin  
-  - Local Administrator (depending on the earlier configuration)  
+1. Open **Group Policy Management**.
+2. In the left pane, expand:
 
-- **Deny log on through Remote Desktop Services** includes:
-  - Domain Admins  
-  - lab-admin  
-  - Local Administrator  
+   - `Forest: lab.local`
+   - `Domains`
+   - `lab.local`
+   - `_Computers`
+   - `_Workstations`
+   - `Lab Workstations`
 
-- **Deny access to this computer from the network** is configured via GPO to include:
-  - Local account  
-  - Local account and members of Administrators group  
+3. In the right pane, confirm that the workstation-hardening GPOs are linked, for example:
 
-After confirming the GPO settings on the domain controller, I ran a policy refresh on the client:
+   - `Baseline Workstation Policy`
+   - `Advanced Workstation Hardening`
+   - `Privileged Access – Block Domain Admins On Workstations`
 
-- `gpupdate /force`
-
-Then rebooted **LAB-CLIENT01**.
-
-Result:
-
-- Domain admins and local admin accounts **cannot log on locally** or use the workstation as a pivot.
-- Local accounts remain blocked from network-based access.
-- The HelpDesk_Tier1 delegation remains intact and operates inside the hardened environment.
-
-**Screenshot 11.12 – Local Security Policy / RSOP on LAB-CLIENT01 showing Deny log on locally and Deny access from the network matching the hardening baseline.**  
-![Screenshot 11.12 – Re-hardened workstation user rights assignments](TODO)
+This confirms that LAB-CLIENT01 (which lives in **Lab Workstations**) is still in scope for the hardening policies.
 
 ---
 
-## 11.12 What This Milestone Demonstrates
+### 11.11B Verify User Rights Assignments in the Hardening GPO
 
-From a hiring and portfolio perspective, Milestone 11 demonstrates that I can:
+Still on **LAB-DC01**, in **Group Policy Management**:
 
-- **Design a realistic operational role** (Help Desk Tier 1) using:
-  - Proper OU placement for staff accounts.  
-  - A dedicated security group representing the role (`HelpDesk_Tier1`).  
+1. Right-click **`Privileged Access – Block Domain Admins On Workstations`** (or whatever name you used for the privileged-access GPO) and choose  
+   **Edit…**
+2. In the GPO editor, navigate to:
 
-- Use the **Delegation of Control Wizard** and **Advanced Security** to:
-  - Grant focused capabilities (password reset, forced password change, limited attribute edits).  
-  - Avoid granting excessive rights (no create/delete user objects).  
-  - Scope delegation cleanly to the correct OU (`_Users`) and its child OUs.  
+   - `Computer Configuration`
+     - `Policies`
+       - `Windows Settings`
+         - `Security Settings`
+           - `Local Policies`
+             - `User Rights Assignment`
 
-- Operate with **RSAT from a workstation**, not from the domain controller:
-  - Install RSAT correctly despite an isolated lab network.  
-  - Use runas with Help Desk credentials to run AD tools in a safer pattern.  
+3. Confirm that the following settings are configured as expected:
 
-- **Validate** that delegated permissions behave as intended:
-  - Allowed actions (password resets) succeed.  
-  - Forbidden actions (user deletion) fail with clear permission errors.  
+   - **Deny log on locally**
+     - Includes: `Domain Admins`, `lab-admin`  
+       (and optionally `Administrator`, if you chose to add it in Milestone 10)
+   - **Deny log on through Remote Desktop Services**
+     - Includes: `Domain Admins`, `lab-admin`  
+       (and optionally `Administrator`, if configured)
+   - **Deny access to this computer from the network**
+     - Includes: `Local account`, `Local account and member of Administrators group`
 
-- Coordinate changes with **existing hardening policies**:
-  - Temporarily relax only what is absolutely necessary to perform testing.  
-  - Restore full hardening afterward without losing track of the baseline.  
+These entries confirm that:
 
-Overall, Milestone 11 transitions the lab into a more realistic, operational environment where **user lifecycle and access operations** are delegated in a controlled, auditable, and security-conscious way.
+- **Domain admins and the dedicated admin account (lab-admin)** are blocked from interactive and RDP logon on workstations.
+- **Local Administrator–type accounts** cannot be used for network access to the workstation (e.g., SMB/administrative shares).
+
+*Screenshot: Re-hardened User Rights Assignments*  
+<img width="1928" height="1185" alt="Screenshot 2025-12-10 152952" src="https://github.com/user-attachments/assets/9a65a73a-0c0d-4002-9194-42ba6e3bc441" />
+
+
+This screenshot visually documents that the deny policies were restored after testing and that the workstation is once again enforcing the hardened baseline.
+
+---
+
+## Milestone 11 Completion Summary
+
+Milestone 11 implemented a realistic **Help Desk Tier 1** workflow while keeping the environment aligned with least-privilege principles and the hardened workstation baseline from earlier milestones.
+
+By the end of this milestone, the lab demonstrates that:
+
+- A dedicated **HelpDesk_Tier1** group exists under the `_Groups` structure.
+- A Help Desk user (e.g., **Alex Turner – A.Turner**) resides in the `_Helpdesk` OU under `_Users` and is a member of **HelpDesk_Tier1`.
+- Delegation on the `_Users` OU grants HelpDesk_Tier1 the ability to:
+  - Reset user passwords.
+  - Unlock user accounts.
+  - Modify non-privileged user attributes (where configured).
+- Help Desk **cannot**:
+  - Delete user accounts.
+  - Create new user accounts.
+  - Modify or elevate privileged identities (such as `lab-admin` or members of `Domain Admins`).
+- LAB-CLIENT01 remains **fully re-hardened**:
+  - Domain admins and admin-only accounts are denied local and RDP logon.
+  - Local Administrator–type accounts cannot be used for network access.
+  - Help Desk cannot read or change local security policy directly; their view is intentionally limited.
+
+In short, Milestone 11 demonstrates the ability to:
+
+- Design a Help Desk OU and group structure.
+- Delegate **just enough** permissions for Tier 1 account-level support.
+- Verify that those permissions work from an actual workstation.
+- Restore and confirm workstation hardening so that no lingering exceptions remain.
