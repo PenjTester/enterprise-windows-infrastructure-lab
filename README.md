@@ -34,7 +34,7 @@ Each milestone has its own detailed documentation file under `/documentation/`.
 | 05 – File Sharing & NTFS Permissions |  Completed | `/documentation/05-file-sharing-permissions-and-ntfs-management.md` |
 | 06 – DHCP Configuration (Dynamic IP Assignment) |  Completed | `/documentation/06-dhcp-configuration-dynamic-ip-assignment.md` |
 | 07 – DNS Management & Domain Service Reliability |  Completed | `/documentation/07-dns-management-and-domain-service-reliability.md` |
-| 08 – Workstation OU Structure & Baseline GPO Deployment |  Completed | `\documentation/08-workstation-OU-structure-and-baseline-GPO-deployment.md` |
+| 08 – Workstation OU Structure & Baseline GPO Deployment |  Completed | `/documentation/08-workstation-OU-structure-and-baseline-GPO-deployment.md` |
 | 09 – Advanced Workstation Hardening | Completed | `/documentation/09-advanced-workstation-hardening.md` |
 | 10 – Domain Admin & Privileged Access Hardening | Completed | `/documentation/10-privileged-access-management-and-administrative-account-hardening.md` |
 | 11 – User Lifecycle & Access Operations | Completed | `/documentation/11-user-lifecycle-and-access-operations.md` |
